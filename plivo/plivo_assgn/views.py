@@ -2,11 +2,18 @@ from django.shortcuts import render
 from django.views.generic import View
 from django.shortcuts import get_object_or_404
 import json
-from django.http import QueryDict
+from django.http import QueryDict, HttpResponse
 from plivo.responses import *
 from .models import ContactBook
 
 # Create your views here.
+class Index(View):
+
+    def get(self, request):
+        return HttpResponse('<h1>Welcome to Plivo Assignment !</h1>') 
+
+
+
 
 class ContactBookCRUD(View):
 
