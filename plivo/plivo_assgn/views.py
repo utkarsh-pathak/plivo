@@ -15,12 +15,7 @@ class ContactBookCRUD(View):
             response = init_response()
             data = request.GET.dict()
             contact_id = data.get('id')
-            try:
-                contact = ContactBook.objects.get(pk=contact_id)
-            except Question.DoesNotExist:
-                raise Http404("Contact does not exist")
-            except:
-                return send_400({"res_str": "Please Check ID!"})
+            contact = get_object_or_404(ContactBook, pk=contact_id)
             response['res_data'] = contact.serialize()
         except Exception as e:
             error_response={}
@@ -54,6 +49,7 @@ class ContactBookCRUD(View):
         return send_200(response)
 
     def delete(self, id, request):
+        ''' soft deletion performed '''
         contact = get_object_or_404(ContactBook, pk=id)
         contact.is_deleted = True
         contact.save()
